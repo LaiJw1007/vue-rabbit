@@ -3,8 +3,7 @@ import {useCategoryStore} from '@/stores/category'
 // 准备吸顶导航组件--->获取滚动距离--->以滚动距离做判断条件控制组件盒子展示隐藏
 // vueUse插件：封装了很多函数
 import { useScroll } from '@vueuse/core'
-// 解构赋值  window对象做的滚动
-const {y} = useScroll(window)
+const {y} = useScroll(window)  // 解构赋值  window对象做的滚动
 
 // 使用pinia中的数据
 const categoryStore = useCategoryStore()   //实例对象  已经在父组件中onMounted挂起getCategory方法
@@ -12,7 +11,6 @@ const categoryStore = useCategoryStore()   //实例对象  已经在父组件中
 
 <template>
   <div class="app-header-sticky" :class="{show:y>78}">
-    {{ y }}
     <div class="container">
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
