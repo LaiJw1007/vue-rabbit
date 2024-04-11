@@ -16,5 +16,5 @@ httpInstance.interceptors.request.use(config => {
 httpInstance.interceptors.response.use(res => res.data, e => {
     return Promise.reject(e)
 })
-
+// 默认导出 不是按需导出 到处不用加{}
 export default httpInstance
