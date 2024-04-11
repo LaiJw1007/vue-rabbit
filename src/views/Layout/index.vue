@@ -14,6 +14,11 @@ import LayoutHeader from "./components/LayoutHeader.vue";
 import LayoutNav from "./components/LayoutNav.vue";
 import LayoutFooter from "./components/LayoutFooter.vue"
 import LayoutFixed from "./components/LayoutFixed.vue";
+// 触发获取导航列表的aiction
+import { useCategoryStore } from "@/stores/category";
+import { onMounted } from "vue";
+const categoryStore = useCategoryStore()  //实例对象
+onMounted(()=>categoryStore.getCategory())  //公共组件触发action
 </script>
 
 <style>

@@ -1,10 +1,13 @@
 <script setup>
+import {useCategoryStore} from '@/stores/category'
 // 准备吸顶导航组件--->获取滚动距离--->以滚动距离做判断条件控制组件盒子展示隐藏
 // vueUse插件：封装了很多函数
 import { useScroll } from '@vueuse/core'
 // 解构赋值  window对象做的滚动
 const {y} = useScroll(window)
 
+// 使用pinia中的数据
+const categoryStore = useCategoryStore()   //实例对象  已经在父组件中onMounted挂起getCategory方法
 </script>
 
 <template>
@@ -17,35 +20,10 @@ const {y} = useScroll(window)
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li>
-          <RouterLink to="/">居家</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">美食</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">服饰</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">母婴</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">个护</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">严选</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">数码</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">运动</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">杂项</RouterLink>
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
-
       <div class="right">
         <RouterLink to="/">品牌</RouterLink>
         <RouterLink to="/">专题</RouterLink>

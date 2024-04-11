@@ -1,20 +1,8 @@
 <script setup>
 import { getCategoryAPI } from '@/apis/layout';
-import { onMounted,ref } from 'vue';
-
-// 渲染模板
-const categoryList = ref([])
-
-// 接口测试
-const getCategory = async ()=>{
-  // 返回的是promise 所以加await
-  const res = await getCategoryAPI()
-  console.log(res);
-  categoryList.value = res.result  //通过打印查看数组存放在result里
-}
-onMounted(()=>{
-  getCategory()
-})
+import {useCategoryStore} from '@/stores/category'
+// 使用pinia中的数据
+const categoryStore = useCategoryStore()   //实例对象  已经在父组件中onMounted挂起getCategory方法
 </script>
 
 <template>
@@ -24,7 +12,10 @@ onMounted(()=>{
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li class="home">
+          <RouterLink to="/">首页</RouterLink>
+        </li>
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
