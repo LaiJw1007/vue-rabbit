@@ -5,7 +5,13 @@ import { useRoute } from "vue-router";
 import { getBannerAPI } from "@/apis/home";
 import GoodsItem from '../Home/components/GoodsItem.vue'
 import { onBeforeRouteUpdate } from "vue-router";
+import {useBanner} from './composables/useBanner'
+import { useCategory } from "./composables/useCategory";
+// 获取banner轮播图
+const {bannerList} = useBanner()
 // 获取数据
+const {categoryData} = useCategory()
+/*
 const categoryData = ref({});
 const route = useRoute(); //获取route实例
 const getCategory = async (id=route.params.id) => {  //路由初始化参数：即当前页面参数
@@ -19,9 +25,9 @@ onMounted(() => getCategory());
 // 目标：在路由参数变化的时候，可以把分类数据接口重新发送
 onBeforeRouteUpdate((to)=>{
   getCategory(to.params.id)  // 存在问题，使用最新的路由参数请求最新的分类数据
-})
+})*/
 
-// 获取banner轮播图
+/*
 const bannerList = ref([]);
 const getBanner = async () => {
   const res = await getBannerAPI({
@@ -31,7 +37,7 @@ const getBanner = async () => {
 };
 onMounted(() => {
   getBanner();
-});
+});*/
 </script>
 
 <template>
@@ -59,7 +65,7 @@ onMounted(() => {
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
