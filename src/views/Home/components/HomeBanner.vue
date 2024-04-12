@@ -5,7 +5,6 @@ import {onMounted, ref} from 'vue'
 const bannerList = ref([])
 const getBanner = async ()=>{
     const res = await getBannerAPI()
-    console.log(res);
     bannerList.value = res.result; //通过打印查看数组存放在result里
 }
 onMounted(()=>{
