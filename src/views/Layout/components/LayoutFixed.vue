@@ -1,8 +1,10 @@
 <script setup>
 import {useCategoryStore} from '@/stores/category'
+import LayoutNav from './LayoutNav.vue'
 // 准备吸顶导航组件--->获取滚动距离--->以滚动距离做判断条件控制组件盒子展示隐藏
 // vueUse插件：封装了很多函数
 import { useScroll } from '@vueuse/core'
+import LayoutNavVue from './LayoutNav.vue'
 const {y} = useScroll(window)  // 解构赋值  window对象做的滚动
 
 // 使用pinia中的数据
@@ -11,6 +13,9 @@ const categoryStore = useCategoryStore()   //实例对象  已经在父组件中
 
 <template>
   <div class="app-header-sticky" :class="{show:y>78}">
+    <!-- 导航区域固定  -->
+    <LayoutNav/>
+
     <div class="container">
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
@@ -34,7 +39,8 @@ const categoryStore = useCategoryStore()   //实例对象  已经在父组件中
 <style scoped lang='scss'>
 .app-header-sticky {
   width: 100%;
-  height: 80px;
+  // height: 80px;
+  height: 133px;
   position: fixed;
   left: 0;
   top: 0;

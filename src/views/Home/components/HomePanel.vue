@@ -11,6 +11,9 @@ defineProps({
 </script>
 
 <template>
+  <!-- 
+    新鲜好物和人气推荐组件的封装
+   -->
   <div class="home-panel">
     <div class="container">
       <div class="head">
