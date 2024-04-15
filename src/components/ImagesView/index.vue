@@ -1,14 +1,22 @@
 <script setup>
 import { useMouseInElement } from '@vueuse/core';
 import {ref, watch} from 'vue'
-// 图片列表
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
-];
+
+// props适配图片列表
+defineProps({
+  imageList:{
+    type:Array,
+    default:()=>[]
+  }
+})
+// // 图片列表
+// const imageList = [
+//   "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
+//   "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
+//   "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
+// ];
 
 // 1. 小图切换大图显示
 const activeIndex = ref(0)
@@ -25,10 +33,11 @@ const {elementX, elementY,isOutside} = useMouseInElement(target)
 // 3. 控制滑块跟随鼠标移动（监听elementX/Y变化，一旦变化 重新设置left/top）
 const left = ref(0)
 const top = ref(0)
+const positionX = ref(0)  // 大图坐标
+const positionY = ref(0)
 watch([elementX,elementY,isOutside],()=>{
   // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑
   if (isOutside.value) return
-  console.log('后续逻辑执行了')
   // 有效范围内控制滑块距离
   if(elementX.value > 100 && elementX.value < 300){  //横向鼠标在有效移动范围内
     left.value = elementX.value - 100
@@ -45,11 +54,18 @@ watch([elementX,elementY,isOutside],()=>{
   if(elementY.value > 300 ){top.value=200}
   if(elementY.value < 100){top.value = 0}
 
+  // 控制放大图的显示
+  positionX.value = -left.value * 2  // 大图的移动方向和滑块移动方向相反，且数值为2倍
+  positionY.value = -top.value * 2
+
+
 })
 </script>
 
 <template>
-  {{ elementX}} , {{elementY}},{{isOutside}}
+  <!-- 
+    详情里的图片展示组件
+   -->
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
@@ -69,12 +85,12 @@ watch([elementX,elementY,isOutside],()=>{
       class="large"
       :style="[
         {
-          backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`,
+          backgroundImage: `url(${imageList[activeIndex]})`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`,
         },
-      ]"
-      v-show="false"
+      ]" v-show="!isOutside"
+      
     ></div>
   </div>
 </template>
@@ -86,12 +102,13 @@ watch([elementX,elementY,isOutside],()=>{
   position: relative;
   display: flex;
 
+  // 小图
   .middle {
     width: 400px;
     height: 400px;
     background: #f5f5f5;
   }
-
+  // 放大的图
   .large {
     position: absolute;
     top: 0;

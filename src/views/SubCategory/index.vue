@@ -45,7 +45,7 @@ const load = async ()=>{
     // 加载完毕 停止监听
     if(res.result.items.length === 0){
         disable.value = true
-        reqData.value.page = 1
+        reqData.value.page = 1 //
     }
 }
 </script>
