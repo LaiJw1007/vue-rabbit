@@ -1,6 +1,7 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/layout';
+// import { getCategoryAPI } from '@/apis/layout';
 import {useCategoryStore} from '@/stores/category'
+import HeaderCart from './HeaderCart.vue';
 // 使用pinia中的数据
 const categoryStore = useCategoryStore()   //实例对象  已经在父组件中onMounted挂起getCategory方法
 </script>
@@ -25,7 +26,7 @@ const categoryStore = useCategoryStore()   //实例对象  已经在父组件中
         <input type="text" placeholder="搜一搜">
       </div>
       <!-- 头部购物车 -->
-      
+      <HeaderCart/>
     </div>
   </header>
 </template>
