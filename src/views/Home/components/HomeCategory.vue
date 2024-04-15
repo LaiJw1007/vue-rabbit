@@ -4,8 +4,12 @@ const categoryStore = useCategoryStore()
 </script>
 
 <template>
+  <!-- 
+    首页轮播图左边 显示的分类字段 子字段截取前两个
+   -->
   <div class="home-category">
     <ul class="menu">
+      <!-- 可以直接使用公共数据 -->
       <li v-for="item in categoryStore.categoryList" :key="item.id">
         <RouterLink to="/">{{ item.name }}</RouterLink>
         <RouterLink v-for="i in item.children.slice(0,2)" :key="i.id" to="/">{{i.name}}</RouterLink>

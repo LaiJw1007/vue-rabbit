@@ -19,7 +19,7 @@ import LayoutFixed from "./components/LayoutFixed.vue";
 import { useCategoryStore } from "@/stores/category";
 import { onMounted } from "vue";
 const categoryStore = useCategoryStore()  //实例对象
-onMounted(()=>categoryStore.getCategory())  //公共组件触发action
+onMounted(()=>categoryStore.getCategory())  //公共组件触发action，分类列表已经存到pinia里
 </script>
 
 <style>
