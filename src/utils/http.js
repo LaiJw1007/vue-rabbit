@@ -2,6 +2,8 @@
 import axios from "axios";
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
+import {useUserStore} from '@/stores/user'
+import router from '@/router'  // js文件导入router  .vue文件里（vue实例）可以导入（使用）useRouter
 
 // 创建实例
 const httpInstance = axios.create({
@@ -11,16 +13,31 @@ const httpInstance = axios.create({
 
 // axios请求拦截器
 httpInstance.interceptors.request.use(config => {
+    // 1. 从pinia获取token数据
+    const userStore = useUserStore()
+    // 2. 按照后端要求拼接token数据
+    const token = userStore.userInfo.token
+    if(token){
+        config.headers.Authorization = `Bearer ${token}`  // 请求头拼接token数据
+    }
     return config
   }, e => Promise.reject(e))
   
 // axios响应式拦截器
 httpInstance.interceptors.response.use(res => res.data, e => {
+    const userStore = useUserStore()
     // 统一错误提示
     ElMessage({
         type:'warning',
         message:e.response.data.message
     })
+    // 401token失效处理
+    // 1. 清除本地用户数据
+    // 2. 跳转到登录页
+    if(e.response.status === 401){
+        userStore.clearUserInfo()
+        router.push('/login')
+    }
     return Promise.reject(e)
 })
 // 默认导出 不是按需导出 到处不用加{}

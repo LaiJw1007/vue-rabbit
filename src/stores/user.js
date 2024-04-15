@@ -11,9 +11,15 @@ export const useUserStore = defineStore("user",()=>{
         console.log('用户：',res);
         userInfo.value = res.result
     }
+
+    // 退出时清楚用户信息
+    const clearUserInfo = ()=>{
+        userInfo.value = {}
+    }
     return{
         userInfo,
-        getUserInfo
+        getUserInfo,
+        clearUserInfo
     }
 },{
     persist:true //持久化数据
