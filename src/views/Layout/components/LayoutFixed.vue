@@ -1,5 +1,5 @@
 <script setup>
-import {useCategoryStore} from '@/stores/category'
+import {useCategoryStore} from '@/stores/categoryStore'
 import LayoutNav from './LayoutNav.vue'
 // 准备吸顶导航组件--->获取滚动距离--->以滚动距离做判断条件控制组件盒子展示隐藏
 // vueUse插件：封装了很多函数
