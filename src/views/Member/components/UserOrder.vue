@@ -20,7 +20,8 @@ const params = ref({
     pageSize:2
 })
 const getOrderList = async ()=>{
-    const res = await getUserOrder(params)
+    const res = await getUserOrder(params.value)
+    console.log('orderListRes:',res.result);
     orderList.value = res.result.items
     total.value = res.result.counts
 }
@@ -28,7 +29,7 @@ onMounted(()=>getOrderList())
 
 // tab切换
 const tabChange = (type)=>{
-    console.log(type);
+    console.log('tabType:',type);
     params.value.orderState = type
     getOrderList()
 }
@@ -39,6 +40,19 @@ const pageChange = (page)=>{
     params.value.page = page
     getOrderList()
 }
+
+// 创建格式化函数
+const fomartPayState = (payState) => {
+    const stateMap = {
+      1: '待付款',
+      2: '待发货',
+      3: '待收货',
+      4: '待评价',
+      5: '已完成',
+      6: '已取消'
+    }
+    return stateMap[payState]
+  }
 
 </script>
 
@@ -89,7 +103,8 @@ const pageChange = (page)=>{
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <!-- 适配数字和对应的中文状态 -->
+                <p>{{ fomartPayState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>

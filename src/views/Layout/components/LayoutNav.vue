@@ -35,8 +35,8 @@ const confirm = ()=>{
               </template>
             </el-popconfirm>
           </li>
-          <li><a href="javascript:;">我的订单</a></li>
-          <li><a href="javascript:;">会员中心</a></li>
+          <li><a href="javascript:;" @click="$router.push('/member/order')">我的订单</a></li>
+          <li><a href="javascript:;" @click="$router.push('/member')">会员中心</a></li>
         </template>
         <template v-else>
           <!-- `push`是追加历史记录（压入栈），`replace`是替换当前的记录。路由跳转时候默认为`push` -->
