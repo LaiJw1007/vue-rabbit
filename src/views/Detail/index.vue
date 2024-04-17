@@ -59,8 +59,8 @@ const addCart = ()=>{
           <!-- 错误原因：goods一开始是空对象 {}.categories -> undefined -> undefined[1]
                 1. 可选链语法 ?.
                 2. v-if手动控制渲染时机 保证只有数据存在才渲染 -->
-          <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">{{ goods.categories[1].name }} </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories[0].id}` }">{{ goods.categories[0].name }} </el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1]?.id}` }">{{ goods.categories[1]?.name }} </el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories[0]?.id}` }">{{ goods.categories[0]?.name }} </el-breadcrumb-item>
           <el-breadcrumb-item>{{goods.name}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -70,7 +70,7 @@ const addCart = ()=>{
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <XtxImagesView :image-list="goods.mainPictures"/>
+              <XtxImagesView :image-list="goods?.mainPictures"/>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -90,18 +90,18 @@ const addCart = ()=>{
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{goods.brand.name}}+</p>
+                  <p>{{goods.brand?.name}}+</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
-              <p class="g-name">{{goods.name}}</p>
-              <p class="g-desc">{{goods.desc}}</p>
+              <p class="g-name">{{goods?.name}}</p>
+              <p class="g-desc">{{goods?.desc}}</p>
               <p class="g-price">
-                <span>{{goods.oldPrice}}</span>
-                <span>{{goods.price}}</span>
+                <span>{{goods?.oldPrice}}</span>
+                <span>{{goods?.price}}</span>
               </p>
               <div class="g-service">
                 <dl>

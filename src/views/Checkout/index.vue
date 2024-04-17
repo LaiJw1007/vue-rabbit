@@ -10,9 +10,11 @@ const curAddress = ref({})   // 默认地址
 const getCheckInfo = async ()=>{
     const res = await getCheckInfoAPI()
     checkInfo.value = res.result
+    console.log('checkinfo:',checkInfo.value);
     // 适配默认地址：地址列表中筛选出来 isDefault === 0
-    const item = checkInfo.value.userAddress.find(item=>item.isDefault === 0)
-    curAddress.value = item || {}
+    const item = checkInfo.value.userAddresses.find(item=>item.isDefault === 0)
+    curAddress.value = item
+    console.log('curAddress:',item);
 }
 onMounted(()=>getCheckInfo())
 
@@ -76,18 +78,18 @@ const createOrder = async ()=>{
               </div>
               <ul v-else>
                 <li>
-                  <span>收<i />货<i />人：</span>{{ curAddress.receiver }}
+                  <span>收<i />货<i />人：</span>{{ curAddress?.receiver }}
                 </li>
-                <li><span>联系方式：</span>{{ curAddress.contact }}</li>
+                <li><span>联系方式：</span>{{ curAddress?.contact }}</li>
                 <li>
-                  <span>收货地址：</span>{{ curAddress.fullLocation }}
-                  {{ curAddress.address }}
+                  <span>收货地址：</span>{{ curAddress?.fullLocation }}
+                  {{ curAddress?.address }}
                 </li>
               </ul>
             </div>
             <div class="action">
               <el-button 
-              size="large" @click="showDiaog = true">切换地址</el-button>
+              size="large" @click="showDialog = true">切换地址</el-button>
               <el-button size="large" @click="addFlag = true">添加地址</el-button>
             </div>
           </div>
